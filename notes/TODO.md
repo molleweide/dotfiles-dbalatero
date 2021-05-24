@@ -1,6 +1,10 @@
-# BALATRO MOLLEWEIDE TODO
+# BALATERO MOLLEWEIDE TODO
 
 - pull balatero
+
+- kmonad vim syntax
+
+- xmonad window manager on linux
 
 - disable > linux shutdown command-U ??!!!!
 
