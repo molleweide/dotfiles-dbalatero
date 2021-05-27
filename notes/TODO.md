@@ -1,10 +1,13 @@
 # BALATERO MOLLEWEIDE TODO
 
+watch >> https://www.youtube.com/watch?v=apyV4v7x33o&list=PLep05UYkc6wSgBFseCsRBSQQ1Fmf3eRa8&index=1
+
+- boa skor
 - pull balatero
 
-- kmonad vim syntax
-
 - xmonad window manager on linux
+
+- watch tj neovim plugin dev stream
 
 - disable > linux shutdown command-U ??!!!!
 
