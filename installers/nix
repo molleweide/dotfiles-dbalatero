@@ -35,5 +35,6 @@ function install_home_manager() {
 dotheader "Setting up NixOS..."
 
 symlink_dotfile nixpkgs ~/.config/nixpkgs
+symlink_dotfile nix ~/.config/nix
 install_nixos
 install_home_manager

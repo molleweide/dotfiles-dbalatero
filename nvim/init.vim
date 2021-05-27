@@ -222,6 +222,7 @@ Plug 'kshenoy/vim-signature'          " show marks in the gutter
 Plug 'itspriddle/vim-stripper'        " strip whitespace on save
 Plug 'tpope/vim-surround'             " cs`' to change `` to '', etc
 Plug 'milkypostman/vim-togglelist'    " <leader>q to toggle quickfix
+Plug 'tpope/vim-abolish'              " snake_case -> camelCase, etc
 
 " Files
 Plug 'danro/rename.vim'
@@ -259,10 +260,14 @@ Plug 'honza/vim-snippets'
 Plug 'craigmac/vim-vsnip-snippets'
 
 " Syntax checking
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 
 " Tests
 Plug 'janko-m/vim-test'
+
+" Writing
+Plug 'junegunn/goyo.vim'       " distraction-free writing with :Goyo
+Plug 'junegunn/limelight.vim'  " dim other paragraphs while writing
 
 " Theming
 Plug 'chrisbra/Colorizer'            " show hex colors in CSS/HTML files
@@ -270,7 +275,9 @@ Plug 'glepnir/galaxyline.nvim'       " fast Lua statusline
 Plug 'kyazdani42/nvim-web-devicons'  " fancy icons
 Plug 'RRethy/vim-illuminate'         " highlight duplicate words
 Plug 'drzel/vim-line-no-indicator'   " nice scroll indicator
-Plug 'sheerun/vim-polyglot'
+
+Plug 'rodjek/vim-puppet'
+Plug 'cappyzawa/starlark.vim'
 
 " color schemes
 Plug 'tjdevries/colorbuddy.vim'
@@ -323,6 +330,9 @@ hi EndOfBuffer guibg=NONE ctermbg=NONE
 
 " highlight hex colors in these file types
 au BufNewFile,BufRead *.css,*.html,*.htm,*.sass,*.scss :ColorHighlight!
+
+" skylark is ~python
+au BufRead,BufNewFile *.sky set filetype=python
 
 " =============== Tmux =========================
 
@@ -397,7 +407,7 @@ let g:fzf_history_dir = '~/.local/share/fzf-history'
 
 function! g:FzfFilesSource()
   let l:base = fnamemodify(expand('%'), ':h:.:S')
-  let l:proximity_sort_path = $HOME . '/.cargo/bin/proximity-sort'
+  let l:proximity_sort_path = $HOME . '/.nix-profile/bin/proximity-sort'
 
   let l:source_command = "rg --files --hidden --glob '!{node_modules/*,.git/*}'"
 
@@ -493,6 +503,9 @@ nnoremap <silent> <space>lr  <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <silent> <space>lt  <cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap <silent> <space>lw  <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 
+" gutter space for lsp info on left
+set signcolumn=yes
+
 " =================== ALE =======================
 
 " ALE config
@@ -549,7 +562,22 @@ nnoremap <leader>d :call FlipBindingPry()<CR>
 
 lua <<LUA
 require('nvim-treesitter.configs').setup {
-  ensure_installed = "maintained",
+  ensure_installed = {
+    'bash',
+    'css',
+    'go',
+    'graphql',
+    'javascript',
+    'json',
+    'lua',
+    'nix',
+    'php',
+    'python',
+    'ruby',
+    'tsx',
+    'typescript',
+    'yaml',
+  },
   highlight = { enable = true },
   incremental_selection = { enable = true },
   textobjects = { enable = true },
@@ -568,6 +596,13 @@ call luaeval('require("custom_snippets")')
 
 " ================= which key ==================
 call luaeval('require("which-key")')
+
+" ================ writing mode ================
+
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
+
+let g:limelight_conceal_guifg = '#777777'
 
 " ================= Stripe ======================
 

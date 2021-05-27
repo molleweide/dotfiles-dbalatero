@@ -52,6 +52,7 @@ export PATH="$PATH:$HOME/.emacs.d/bin"
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 
 # Restic/Backblaze
+# restic mount -r $SYNC_REPO ~/backblaze
 export RESTIC_REPOSITORY="b2:dbalatero-backup"
 export SYNC_REPO="$RESTIC_REPOSITORY:/Sync"
 export FREEZE_REPO="$RESTIC_REPOSITORY:/Freeze"

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, rustPlatform, ... }:
 
 {
   # Let Home Manager install and manage itself.
@@ -19,8 +19,19 @@
   # changes in each release.
   home.stateVersion = "21.03";
 
+  nixpkgs.overlays = [
+    (import (builtins.fetchTarball {
+      url = https://github.com/nix-community/neovim-nightly-overlay/archive/master.tar.gz;
+    }))
+  ];
+
   home.packages = [
+    pkgs.tree-sitter
+    pkgs.neovim-nightly
     pkgs.gitAndTools.gitstatus
     (import ./ddcctl.nix { pkgs = pkgs; })
+    (import ./proximity-sort.nix { lib = lib; pkgs = pkgs; })
+    pkgs.cargo
+    pkgs.rustc
   ];
 }

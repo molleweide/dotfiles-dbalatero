@@ -1,3 +1,5 @@
+local utf8 = require('utf8')
+
 local function getRichLinkToCurrentChromeTab()
   local application = hs.application.frontmostApplication()
 
@@ -17,8 +19,13 @@ local function getRichLinkToCurrentChromeTab()
   -- remove trailing garbage from window title
   title = string.gsub(title, "- - Google Chrome.*", "")
 
-  -- fix unicode issue with Github links ugh
-  title = string.gsub(title, " · ", " | ")
+  local encodedTitle = ""
+
+  -- encode the title as html entities like (&#107;&#84;), so that we can
+  -- print out unicode characters inside of `getStyledTextFromData`.
+  for _, code in utf8.codes(title) do
+    encodedTitle = encodedTitle .. "&#" .. code .. ";"
+  end
 
   script = [[
     tell application "Google Chrome"
@@ -27,7 +34,7 @@ local function getRichLinkToCurrentChromeTab()
   ]]
 
   local _, url = hs.osascript.applescript(script)
-  local html = "<a href=\"" .. url .. "\">" .. title .. "</a>"
+  local html = "<a href=\"" .. url .. "\">" .. encodedTitle .. "</a>"
   local styledText = hs.styledtext.getStyledTextFromData(html, "html")
 
   hs.pasteboard.writeObjects(styledText)

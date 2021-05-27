@@ -12,5 +12,6 @@
   "window.restoreFullscreen": true,
   "window.zoomLevel": 1,
   "workbench.colorTheme": "Base16 Dark Oceanic Next",
-  "workbench.panel.defaultLocation": "right"
+  "workbench.panel.defaultLocation": "right",
+  "editor.accessibilitySupport": "off"
 }

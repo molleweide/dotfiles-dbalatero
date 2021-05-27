@@ -16,6 +16,7 @@ require "experimental"
 require "contextual-modal"
 require "headphones"
 require "monitor-switching"
+require "ocr-paste"
 
 -- only do vim3 dev on my desktop
 if hs.host.localizedName() == "sorny" then
@@ -43,6 +44,7 @@ end
 -- vim
 vim
   :disableForApp('Alacritty')
+  :disableForApp('Obsidian')
   :disableForApp('Code')
   :disableForApp('Terminal')
   :disableForApp('Tuple')
